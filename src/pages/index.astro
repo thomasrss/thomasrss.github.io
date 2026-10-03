@@ -1,0 +1,208 @@
+---
+import '../styles/global.css';
+
+const projects = [
+  {
+    number: '01',
+    title: 'Structured Latent Spaces for Human Activity Recognition',
+    description: 'Can a low-dimensional representation remain both interpretable and operational for activity recognition?',
+    tags: ['IMU', 'HAR', 'Representation Learning', 'AAE'],
+    type: 'latent'
+  },
+  {
+    number: '02',
+    title: 'Motion-Aware Physiological Representations',
+    description: 'Using motion information to learn physiological representations that are more robust to movement artifacts.',
+    tags: ['PPG', 'IMU', 'Multimodal Learning', 'Digital Health'],
+    type: 'signals'
+  },
+  {
+    number: '03',
+    title: 'Reduced Representations in Human Activity Recognition',
+    description: 'A systematic review of how reduced representations are used, interpreted, and evaluated in HAR research.',
+    tags: ['Systematic Review', 'HAR', 'Taxonomy', '153 studies'],
+    type: 'review'
+  }
+];
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content="Thomas Rousseau — research on representation learning for human movement, wearable sensing and digital health." />
+    <title>Thomas Rousseau — Human Movement Representation Learning</title>
+  </head>
+  <body>
+    <header class="shell nav">
+      <a class="brand" href="#top">
+        <strong>Thomas Rousseau</strong>
+        <span>PhD Researcher · The University of Tokyo</span>
+      </a>
+      <nav class="nav-links" aria-label="Main navigation">
+        <a href="#research">Research</a>
+        <a href="#projects">Projects</a>
+        <a href="#publications">Publications</a>
+        <a href="#about">About</a>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="shell hero">
+        <div>
+          <div class="eyebrow">Human movement · Wearable sensing · Representation learning</div>
+          <h1>Learning meaningful representations of human movement.</h1>
+          <p>
+            I develop machine-learning methods to learn interpretable representations from wearable and multimodal sensing, with applications to human activity, biomechanics and digital health.
+          </p>
+          <div class="actions">
+            <a class="btn primary" href="#research">Explore my research ↓</a>
+            <a class="btn" href="#projects">View projects →</a>
+          </div>
+          <div class="socials">
+            <a href="https://github.com/thomasrss">GitHub ↗</a>
+            <a href="https://scholar.google.com/citations?user=g6OsxqwAAAAJ&hl=en">Google Scholar ↗</a>
+            <a href="https://www.linkedin.com/in/thomas-rousseau31000">LinkedIn ↗</a>
+            <a href="mailto:thomasrousseau@g.ecc.u-tokyo.ac.jp">Email ↗</a>
+          </div>
+        </div>
+
+        <div class="hero-visual">
+          <img
+            src="/images/intro.png"
+            alt="Human movement data from wearable sensors transformed into a latent representation"
+            width="1448"
+            height="1086"
+          />
+        </div>
+      </section>
+
+      <section class="section" id="projects">
+        <div class="shell">
+          <div class="section-head">
+            <div><div class="section-kicker">Selected research</div><h2>Projects</h2></div>
+            <p>Research projects connecting representation learning with human movement, wearable sensing and health applications.</p>
+          </div>
+
+          <div class="projects">
+            {projects.map((project) => (
+              <article class="card">
+                <div class="number">{project.number}</div>
+                <h3>{project.title}</h3>
+                <div class="visual">
+                  {project.type === 'latent' && (
+                    <svg viewBox="0 0 320 180">
+                      <g opacity=".84">
+                        <g fill="#2d84c5">{Array.from({length:38}).map((_,i)=><circle cx={45+(i*11)%76} cy={42+(i*17)%82} r="3" />)}</g>
+                        <g fill="#2ca6a4">{Array.from({length:33}).map((_,i)=><circle cx={142+(i*13)%62} cy={30+(i*21)%88} r="3" />)}</g>
+                        <g fill="#7259b8">{Array.from({length:30}).map((_,i)=><circle cx={160+(i*19)%70} cy={98+(i*9)%58} r="3" />)}</g>
+                        <g fill="#e3a45f">{Array.from({length:32}).map((_,i)=><circle cx={250+(i*13)%56} cy={42+(i*15)%82} r="3" />)}</g>
+                      </g>
+                    </svg>
+                  )}
+                  {project.type === 'signals' && (
+                    <svg viewBox="0 0 320 180">
+                      <text x="24" y="48" fill="#567087" font-size="11">PPG</text>
+                      <path d="M58 44 C70 15 82 75 95 44 S121 14 134 44 S160 76 173 44 S199 16 212 44" fill="none" stroke="#2ca6a4" stroke-width="2.2"/>
+                      <text x="24" y="102" fill="#567087" font-size="11">ACC</text>
+                      <path d="M58 100 L72 97 L82 81 L92 118 L104 86 L116 111 L130 88 L142 106 L157 93 L173 108 L190 91 L212 101" fill="none" stroke="#2d84c5" stroke-width="2.2"/>
+                      <path d="M226 48 C260 52 265 74 265 90 C265 107 258 128 226 132" fill="none" stroke="#9eb8c7" stroke-width="1.6"/>
+                      <circle cx="284" cy="91" r="24" fill="#f0f6f7" stroke="#cfe0e7"/><text x="271" y="96" font-size="13" fill="#47647c">z</text>
+                    </svg>
+                  )}
+                  {project.type === 'review' && (
+                    <svg viewBox="0 0 320 180">
+                      <circle cx="160" cy="90" r="55" fill="#f7fbfc" stroke="#cfe0e7" stroke-width="12" stroke-dasharray="14 6"/>
+                      <circle cx="160" cy="90" r="37" fill="#fff"/>
+                      <text x="160" y="84" text-anchor="middle" font-size="25" font-weight="800" fill="#102b4e">153</text>
+                      <text x="160" y="103" text-anchor="middle" font-size="11" fill="#567087">studies</text>
+                      <text x="46" y="42" font-size="10" fill="#2ca6a4">taxonomy</text>
+                      <text x="224" y="46" font-size="10" fill="#7259b8">visualization</text>
+                      <text x="37" y="144" font-size="10" fill="#1468a8">evaluation</text>
+                      <text x="224" y="142" font-size="10" fill="#e3a45f">classification</text>
+                    </svg>
+                  )}
+                </div>
+                <p>{project.description}</p>
+                <div class="tags">{project.tags.map((tag) => <span class="tag">{tag}</span>)}</div>
+                <a class="link" href="#">View project →</a>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section class="section soft" id="research">
+        <div class="shell">
+          <div class="section-head">
+            <div><div class="section-kicker">Research areas</div><h2>What I work on</h2></div>
+          </div>
+          <div class="areas">
+            <div class="area"><div class="area-icon">⌁</div><div><h3>Movement Representation Learning</h3><p>Learning structured and interpretable representations of human movement from wearable and multimodal sensing.</p></div></div>
+            <div class="area"><div class="area-icon">∿</div><div><h3>Wearable & Multimodal Sensing</h3><p>Combining IMU, PPG, motion capture and complementary signals to understand movement and physiology.</p></div></div>
+            <div class="area"><div class="area-icon">♡</div><div><h3>Digital Health & Rehabilitation</h3><p>Translating learned representations toward fatigue monitoring, biomechanics and rehabilitation assessment.</p></div></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="publications">
+        <div class="shell">
+          <div class="section-head">
+            <div><div class="section-kicker">Selected publications</div><h2>Writing & papers</h2></div>
+          </div>
+          <div class="publications">
+            <article class="pub">
+              <div class="pub-year">Under review</div>
+              <div>
+                <div class="pub-title">Reduced Representations in Human Activity Recognition: A Systematic Review and Event-Level Taxonomy</div>
+                <div class="pub-authors">Jane Doe, <strong>Thomas Rousseau</strong>, John Smith</div>
+                <div class="pub-meta">Systematic review · Human activity recognition · Representation learning</div>
+              </div>
+              <div class="pub-actions"><a href="#">Project →</a></div>
+            </article>
+            <article class="pub">
+              <div class="pub-year">2024</div>
+              <div>
+                <div class="pub-title">Latent space representation of human movement: assessing the effects of fatigue</div>
+                <div class="pub-authors"><strong>Thomas Rousseau</strong>, G. Venture, V. Hernandez</div>
+                <div class="pub-meta">IMU & Force plate · Adversarial autoencoders · Operational low-dimensional latent space · Fatigue monitoring · Sport Science</div>
+              </div>
+              <div class="pub-actions"><a href="https://www.mdpi.com/1424-8220/24/23/7775">Sensors →</a></div>
+            </article>
+            <article class="pub">
+              <div class="pub-year">2024</div>
+              <div>
+                <div class="pub-title">The measurement of spatiotemporal parameters in running at different velocities: a comparison between a GPS unit and an infrared mat</div>
+                <div class="pub-authors">T. Provot, B. Millot, E. Hazotte, <strong>Thomas Rousseau</strong>, J. Slawinski</div>
+                <div class="pub-meta">IMU & Optoeletronic system · Sport Science · Performance indicators · Track and field</div>
+              </div>
+              <div class="pub-actions"><a href="https://www.mdpi.com/2409-9279/7/6/103">Methods and Protocols →</a></div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section soft" id="about">
+        <div class="shell about">
+          <div class="portrait" aria-label="Photo placeholder">TR</div>
+          <div>
+            <div class="section-kicker">About me</div>
+            <h2 style="font-size:38px;letter-spacing:-.04em;margin:8px 0 12px;">Researching movement through representations.</h2>
+            <p>I am a PhD researcher at The University of Tokyo working on representation learning for human movement, wearable sensing and digital health. My research focuses on making learned representations both useful and interpretable.</p>
+            <a class="btn" href="#">More about me →</a>
+          </div>
+          <div class="about-meta">
+            <div><strong>The University of Tokyo</strong>PhD Researcher</div>
+            <div><strong>Research</strong>Movement representations<br/>Wearable sensing<br/>Digital health</div>
+            <div><strong>Based in</strong>Tokyo, Japan</div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="shell footer">
+      <span>© 2026 Thomas Rousseau</span>
+      <span>Built with Astro · Replace placeholder links before publishing.</span>
+    </footer>
+  </body>
+</html>
