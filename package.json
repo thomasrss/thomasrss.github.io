@@ -9,6 +9,8 @@
     "preview": "astro preview"
   },
   "dependencies": {
-    "astro": "^7.3.5"
+    "astro": "^7.3.5",
+    "bootstrap-icons": "^1.13.2",
+    "simple-icons": "^16.34.0"
   }
 }

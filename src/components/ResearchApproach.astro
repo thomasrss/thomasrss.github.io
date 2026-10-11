@@ -1,0 +1,112 @@
+---
+// Research approach — place directly before <SelectedProjects /> in index.astro.
+---
+<section class="section research-approach" id="research" aria-labelledby="research-approach-heading">
+  <div class="shell">
+    <div class="section-head research-approach-heading">
+      <div>
+        <div class="section-kicker">Research approach</div>
+        <h2 id="research-approach-heading">From sensing to meaningful understanding.</h2>
+      </div>
+      <p>
+        My research explores how movement and physiological signals can be transformed
+        into compact representations that remain informative, interpretable and useful.
+      </p>
+    </div>
+
+    <div class="approach-flow" aria-label="Three stages of the research approach">
+      <article class="approach-stage stage-sensing">
+        <div class="approach-stage-top"><span class="approach-index">01 / INPUT</span><span class="approach-stage-dot" aria-hidden="true"></span></div>
+        <div class="approach-graphic" aria-hidden="true">
+          <svg viewBox="0 0 280 102" preserveAspectRatio="xMidYMid meet">
+            <g fill="none" stroke="#d5e3e7" stroke-width="1"><path d="M9 30H270M9 67H270" stroke-dasharray="3 6"/></g>
+            <text x="10" y="21" class="graph-label">PPG</text>
+            <path d="M56 30L76 30Q82 30 86 25L94 7L106 49L117 28Q121 30 134 30H147Q153 30 157 25L165 7L178 49L188 30H206" stroke="#2ca6a4" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            <text x="10" y="74" class="graph-label">IMU</text>
+            <path d="M56 73L71 72L81 78L95 59L104 84L116 65L131 75L146 62L160 77L176 70L189 76L206 68" stroke="#2d84c5" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M216 18L242 18M229 6V30" stroke="#c5dfe6" stroke-width="1.4"/>
+            <circle cx="229" cy="18" r="5" fill="#e49a3a" opacity=".8"/>
+          </svg>
+        </div>
+        <h3>Sensing</h3>
+        <p>Capture human movement and physiological signals in everyday and experimental settings.</p>
+        <div class="approach-tags"><span>IMU</span><span>PPG</span><span>Motion capture</span></div>
+      </article>
+
+      <div class="approach-connector" aria-hidden="true"><span>→</span></div>
+
+      <article class="approach-stage stage-learning">
+        <div class="approach-stage-top"><span class="approach-index">02 / MODELING</span><span class="approach-stage-dot" aria-hidden="true"></span></div>
+        <div class="approach-graphic" aria-hidden="true">
+          <svg viewBox="0 0 280 102" preserveAspectRatio="xMidYMid meet">
+            <g stroke="#bbd2dc" stroke-width="1" opacity=".7"><path d="M28 90V9M28 90H253"/></g>
+            <text x="236" y="99" class="graph-label">z₁</text><text x="8" y="14" class="graph-label">z₂</text>
+            <g fill="#2ca6a4" opacity=".83"><circle cx="77" cy="63" r="3"/><circle cx="93" cy="75" r="3"/><circle cx="67" cy="79" r="2.6"/><circle cx="110" cy="61" r="2.3"/><circle cx="85" cy="53" r="3"/><circle cx="61" cy="59" r="2.3"/><circle cx="99" cy="87" r="2.6"/><circle cx="73" cy="88" r="2.6"/><circle cx="105" cy="48" r="2.5"/><circle cx="82" cy="76" r="2.5"/><circle cx="118" cy="80" r="2.5"/></g>
+            <g fill="#2d84c5" opacity=".85"><circle cx="151" cy="25" r="3"/><circle cx="166" cy="41" r="3"/><circle cx="139" cy="39" r="2.6"/><circle cx="169" cy="19" r="2.6"/><circle cx="191" cy="33" r="2.6"/><circle cx="148" cy="49" r="2.5"/><circle cx="178" cy="56" r="2.6"/><circle cx="157" cy="60" r="2.5"/><circle cx="134" cy="24" r="2.5"/><circle cx="187" cy="49" r="2.6"/><circle cx="162" cy="29" r="2.6"/></g>
+            <g fill="#e49a3a" opacity=".9"><circle cx="211" cy="80" r="3"/><circle cx="217" cy="65" r="3"/><circle cx="233" cy="75" r="2.6"/><circle cx="199" cy="61" r="2.5"/><circle cx="243" cy="60" r="2.7"/><circle cx="226" cy="88" r="2.6"/><circle cx="195" cy="84" r="2.6"/><circle cx="209" cy="49" r="2.5"/><circle cx="242" cy="86" r="2.5"/></g>
+            <g fill="none" stroke-width="1.2" stroke-dasharray="4 5" opacity=".32"><ellipse cx="88" cy="69" rx="39" ry="27" stroke="#2ca6a4"/><ellipse cx="164" cy="40" rx="38" ry="29" stroke="#2d84c5"/><ellipse cx="218" cy="70" rx="35" ry="26" stroke="#e49a3a"/></g>
+          </svg>
+        </div>
+        <h3>Representation learning</h3>
+        <p>Learn and evaluate latent structures that preserve meaningful information about movement.</p>
+        <div class="approach-tags"><span>Deep learning</span><span>Latent spaces</span></div>
+      </article>
+
+      <div class="approach-connector" aria-hidden="true"><span>→</span></div>
+
+      <article class="approach-stage stage-application">
+        <div class="approach-stage-top"><span class="approach-index">03 / PURPOSE</span><span class="approach-stage-dot" aria-hidden="true"></span></div>
+        <div class="approach-graphic" aria-hidden="true">
+          <svg viewBox="0 0 280 102" preserveAspectRatio="xMidYMid meet">
+            <g fill="none" stroke="#bed6dd" opacity=".8" stroke-width="1.2"><path d="M17 91H265" stroke-dasharray="3 5"/><path d="M171 18H259M171 38H247" stroke-dasharray="3 5"/></g>
+            <g stroke="#2d84c5" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none">
+              <circle cx="92" cy="16" r="8"/><path d="M92 25L91 55L74 79M91 55L114 69L132 91M91 35L113 44L132 36M91 35L72 44L55 59"/>
+            </g>
+            <g fill="#2ca6a4"><circle cx="91" cy="55" r="4"/><circle cx="74" cy="79" r="4"/><circle cx="114" cy="69" r="4"/><circle cx="132" cy="91" r="4"/><circle cx="113" cy="44" r="3.5"/></g>
+            <path d="M153 84Q169 68 182 70T207 54T229 61T261 35" stroke="#e49a3a" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+            <g fill="#e49a3a"><circle cx="153" cy="84" r="3"/><circle cx="207" cy="54" r="3"/><circle cx="261" cy="35" r="3"/></g>
+          </svg>
+        </div>
+        <h3>Interpretation &amp; impact</h3>
+        <p>Connect learned representations to biomechanical insights and health applications.</p>
+        <div class="approach-tags"><span>Biomechanics</span><span>Digital health</span></div>
+      </article>
+    </div>
+
+    <div class="approach-caption">
+      <span class="approach-caption-label">GUIDING QUESTION</span>
+      <span>What does a compact representation reveal about movement—and what information does it leave behind?</span>
+    </div>
+  </div>
+</section>
+
+<style>
+/* Research Approach — self-contained component styles */
+.research-approach { background: transparent; }
+.research-approach-heading { margin-bottom: 25px; }
+.research-approach-heading h2 { max-width: 670px; line-height: 1.15; font-size: clamp(29px, 3vw, 38px); }
+.research-approach-heading p { max-width: 435px; font-size: 14px; line-height: 1.65; }
+.approach-flow { display:grid; grid-template-columns:minmax(0,1fr) 30px minmax(0,1fr) 30px minmax(0,1fr); align-items:stretch; }
+.approach-stage { position:relative; display:flex; flex-direction:column; min-width:0; padding:22px 23px 20px; background:rgba(255,255,255,.80); border:1px solid #dae5e8; border-radius:15px; box-shadow:0 9px 30px rgba(32,72,105,.04); transition:transform .24s ease, box-shadow .24s ease; }
+.approach-stage:hover { transform:translateY(-3px); box-shadow:0 14px 36px rgba(32,72,105,.08); }
+.approach-stage-top { display:flex; align-items:center; justify-content:space-between; gap:12px; }
+.approach-index { color:#718499; font-family:'Space Mono', monospace; font-size:9px; font-weight:700; letter-spacing:.08em; }
+.approach-stage-dot { width:8px; height:8px; border-radius:50%; background:#2ca6a4; box-shadow:0 0 0 5px #e6f5f3; }
+.stage-learning .approach-stage-dot { background:#2d84c5; box-shadow:0 0 0 5px #e9f2fa; }
+.stage-application .approach-stage-dot { background:#e49a3a; box-shadow:0 0 0 5px #fcf3e5; }
+.approach-graphic { height:100px; margin:10px -2px 8px; }
+.approach-graphic svg { display:block; width:100%; height:100%; }
+.graph-label { fill:#7891a2; font-family:'Space Mono', monospace; font-size:10px; letter-spacing:1px; }
+.approach-stage h3 { font-family:'Space Grotesk',sans-serif; font-size:19px; font-weight:700; letter-spacing:-.035em; line-height:1.2; color:#102b4e; margin:0 0 8px; }
+.approach-stage p { color:#48627e; font-size:13px; line-height:1.6; margin:0 0 18px; }
+.approach-tags { margin-top:auto; display:flex; flex-wrap:wrap; gap:6px; }
+.approach-tags span { color:#567087; background:#eff6f8; border:1px solid #e1edef; border-radius:999px; padding:4px 9px; font-size:10px; }
+.approach-connector { position:relative; display:grid; place-items:center; z-index:2; color:#2d84c5; font-size:24px; font-weight:400; }
+.approach-connector::before { content:''; display:block; position:absolute; inset:auto -2px; height:1px; background:#c6dce4; z-index:-1; }
+.approach-connector span { display:grid; place-items:center; width:25px; height:25px; line-height:1; background:#f3f6f6; }
+.approach-caption { display:flex; align-items:baseline; gap:15px; margin:20px 4px 0; color:#48627e; font-size:13px; line-height:1.55; }
+.approach-caption-label { flex:none; font-family:'Space Mono',monospace; letter-spacing:.08em; color:#1468a8; font-size:10px; font-weight:700; }
+@media(max-width:850px) { .approach-flow {grid-template-columns:1fr; gap:0; } .approach-stage {padding:20px 23px;} .approach-connector {height:32px;font-size:22px;transform:rotate(90deg);} .approach-connector::before {height:1px;left:calc(50% - 16px);right:calc(50% - 16px);} .approach-graphic {height:88px;} .approach-caption {flex-direction:column; gap:5px;} .research-approach-heading {align-items:flex-start;} }
+@media(max-width:680px) { .research-approach-heading h2 {font-size:31px;} }
+@media(prefers-reduced-motion:reduce) { .approach-stage {transition:none;} }
+</style>

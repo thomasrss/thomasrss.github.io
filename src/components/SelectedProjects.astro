@@ -1,0 +1,310 @@
+---
+// Selected Research Projects — drop-in Astro component.
+// Uses the existing .section, .shell and .section-head styles from global.css.
+// All card styles and scientific illustrations are self-contained below.
+const latentClusters = [
+  { x: 120, y: 104, color: '#2ca6a4' },
+  { x: 260, y: 69, color: '#2d84c5' },
+  { x: 361, y: 121, color: '#e49a3a' },
+];
+const latentPoints = latentClusters.flatMap((cluster, group) =>
+  Array.from({ length: 29 }, (_, i) => ({
+    x: cluster.x + Math.cos(i * 2.399963 + group) * (8 + ((i * 13) % 49)),
+    y: cluster.y + Math.sin(i * 2.399963 + group) * (7 + ((i * 11) % 37)),
+    radius: i % 8 === 0 ? 3.3 : 2.4,
+    color: cluster.color,
+  }))
+);
+---
+
+<section class="section selected-projects" id="projects" aria-labelledby="selected-projects-heading">
+  <div class="shell">
+    <div class="section-head selected-heading">
+      <div>
+        <div class="section-kicker">Research portfolio</div>
+        <h2 id="selected-projects-heading">Selected Research Projects</h2>
+      </div>
+      <p>
+        Exploring how meaningful representations of movement and physiology can
+        support human activity understanding, wearable sensing and digital health.
+      </p>
+    </div>
+
+    <div class="selected-project-grid">
+      <!-- 01 · Movement representation learning -->
+      <article class="selected-project-card">
+        <div class="selected-project-visual visual-latent" aria-hidden="true">
+          <svg viewBox="0 0 480 180" role="presentation">
+            <g stroke="#b8d5de" stroke-width=".8" opacity=".38">
+              <path d="M22 34H458M22 72H458M22 110H458M22 148H458" />
+              <path d="M70 15V165M154 15V165M238 15V165M322 15V165M406 15V165" />
+            </g>
+            <g fill="none" stroke-width="1.2" stroke-dasharray="4 5" opacity=".45">
+              <ellipse cx="120" cy="104" rx="65" ry="46" stroke="#2ca6a4" />
+              <ellipse cx="260" cy="69" rx="64" ry="43" stroke="#2d84c5" />
+              <ellipse cx="361" cy="121" rx="65" ry="45" stroke="#e49a3a" />
+            </g>
+            {latentPoints.map(point => (
+              <circle cx={point.x} cy={point.y} r={point.radius} fill={point.color} opacity=".8" />
+            ))}
+            <text x="24" y="21" class="diagram-label">LATENT REPRESENTATION · 2D</text>
+          </svg>
+        </div>
+        <div class="selected-project-body">
+          <div class="selected-project-meta">
+            <span>01 / Representation learning</span>
+            <span class="selected-project-status">Current research</span>
+          </div>
+          <h3>Movement Representation Learning</h3>
+          <p>
+            Investigating how structured, low-dimensional latent spaces capture
+            movement information and support human activity recognition from wearable sensors.
+          </p>
+          <div class="selected-project-tags">
+            <span>IMU</span><span>AAE</span><span>Human Activity Recognition</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- 02 · Movement dynamics and fatigue -->
+      <article class="selected-project-card">
+        <div class="selected-project-visual visual-fatigue" aria-hidden="true">
+          <svg viewBox="0 0 480 180" role="presentation">
+            <g stroke="#c1d5db" stroke-width="1" opacity=".55">
+              <path d="M34 145H451M34 107H451M34 69H451" stroke-dasharray="3 6"/>
+            </g>
+            <path d="M35 143C79 137 102 132 145 117S216 102 252 86S318 64 365 46S428 32 453 24"
+                  fill="none" stroke="#2d84c5" stroke-width="3.1" stroke-linecap="round" />
+            <path d="M35 143C79 137 102 132 145 117S216 102 252 86S318 64 365 46S428 32 453 24L453 150H35Z"
+                  fill="#2d84c5" opacity=".055" />
+            <path d="M35 149Q50 137 65 149T95 149T125 149T155 149T185 149T215 149T245 149T275 149T305 149T335 149T365 149T395 149T425 149T455 149"
+                  fill="none" stroke="#2ca6a4" stroke-width="1.5" opacity=".65" />
+            <g fill="#fff" stroke="#2d84c5" stroke-width="2.5">
+              <circle cx="145" cy="117" r="5"/><circle cx="252" cy="86" r="5"/><circle cx="365" cy="46" r="5"/>
+            </g>
+            <text x="34" y="20" class="diagram-label">MOVEMENT STATE · EXERTION</text>
+            <text x="367" y="168" class="diagram-label">TIME →</text>
+          </svg>
+        </div>
+        <div class="selected-project-body">
+          <div class="selected-project-meta">
+            <span>02 / Movement dynamics</span>
+            <span class="selected-project-status">Current research</span>
+          </div>
+          <h3>Movement Dynamics &amp; Fatigue</h3>
+          <p>
+            Studying whether changes in movement execution and perceived exertion
+            can be characterized through trajectories in learned latent spaces.
+          </p>
+          <div class="selected-project-tags">
+            <span>Biomechanics</span><span>Fatigue</span><span>Wearable Sensing</span>
+          </div>
+          <a class="selected-project-link" href="https://www.mdpi.com/1424-8220/24/23/7775" target="_blank" rel="noopener noreferrer">
+            Related published study <span aria-hidden="true">↗</span>
+          </a>
+        </div>
+      </article>
+
+      <!-- 03 · Motion-aware physiological sensing -->
+      <article class="selected-project-card">
+        <div class="selected-project-visual visual-ppg" aria-hidden="true">
+          <svg viewBox="0 0 480 180" role="presentation">
+            <text x="24" y="25" class="diagram-label">MULTIMODAL PHYSIOLOGICAL SENSING</text>
+            <text x="24" y="63" class="diagram-small">PPG</text>
+            <path d="M72 59H93L101 55L112 24L125 87L139 53L155 59H176L184 55L195 24L208 87L222 53L239 59H253"
+                  fill="none" stroke="#2ca6a4" stroke-width="2.8" stroke-linejoin="round" stroke-linecap="round" />
+            <text x="24" y="124" class="diagram-small">ACC</text>
+            <path d="M72 120L84 115L96 129L109 104L119 140L132 110L145 124L156 113L170 131L181 111L192 125L207 116L219 133L232 108L253 120"
+                  fill="none" stroke="#2d84c5" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round" />
+            <path d="M274 59L318 87L274 120" stroke="#91aebc" stroke-width="1.8" fill="none"/>
+            <circle cx="375" cy="88" r="45" stroke="#c9dfe4" fill="#f8fcfc" stroke-width="1.5" />
+            <circle cx="375" cy="88" r="33" stroke="#2d84c5" fill="none" stroke-width="1.5" stroke-dasharray="3 5" opacity=".55" />
+            <text x="375" y="94" text-anchor="middle" font-size="25" font-weight="700" fill="#1468a8">z</text>
+            <text x="375" y="148" text-anchor="middle" class="diagram-label">REPRESENTATION</text>
+          </svg>
+        </div>
+        <div class="selected-project-body">
+          <div class="selected-project-meta">
+            <span>03 / Physiological sensing</span>
+            <span class="selected-project-status">Open-data research</span>
+          </div>
+          <h3>Motion-Aware Physiological Sensing</h3>
+          <p>
+            Combining wrist PPG and accelerometry to explore physiological
+            representations that remain informative in the presence of motion artifacts.
+          </p>
+          <div class="selected-project-tags">
+            <span>PPG</span><span>Accelerometry</span><span>Multimodal Learning</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- 04 · Rehabilitation direction -->
+      <article class="selected-project-card">
+        <div class="selected-project-visual visual-rehab" aria-hidden="true">
+          <svg viewBox="0 0 480 180" role="presentation">
+            <text x="24" y="22" class="diagram-label">MOVEMENT ANALYSIS · REHABILITATION</text>
+            <path d="M36 152H454" stroke="#aec7ce" stroke-width="1.4" opacity=".6" />
+            <path d="M61 149C141 117 169 159 241 146S363 132 431 151" fill="none" stroke="#2ca6a4" stroke-width="1.4" stroke-dasharray="5 6" opacity=".55" />
+            <g stroke="#2d84c5" stroke-width="3.1" stroke-linecap="round" stroke-linejoin="round" fill="none">
+              <circle cx="115" cy="55" r="12" />
+              <path d="M114 68L116 111L96 144M116 111L142 145M115 81L91 103M115 81L138 97" />
+              <circle cx="245" cy="55" r="12" />
+              <path d="M244 68L246 110L222 144M246 110L277 139M245 82L225 100M245 82L269 95" />
+              <circle cx="373" cy="55" r="12" />
+              <path d="M372 68L373 111L358 144M373 111L403 143M373 82L350 95M373 82L393 103" />
+            </g>
+            <g fill="#2ca6a4">
+              <circle cx="116" cy="111" r="4"/><circle cx="246" cy="110" r="4"/><circle cx="373" cy="111" r="4"/>
+            </g>
+          </svg>
+        </div>
+        <div class="selected-project-body">
+          <div class="selected-project-meta">
+            <span>04 / Clinical translation</span>
+            <span class="selected-project-status status-direction">Research direction</span>
+          </div>
+          <h3>Movement Analysis for Rehabilitation</h3>
+          <p>
+            Exploring how interpretable movement representations could support
+            quantitative gait analysis and rehabilitation assessment.
+          </p>
+          <div class="selected-project-tags">
+            <span>Gait</span><span>Biomechanics</span><span>Digital Health</span>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<style>
+  .selected-projects { position: relative; }
+  .selected-heading { margin-bottom: 28px; }
+  .selected-heading p { max-width: 540px; }
+  .selected-project-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 22px;
+  }
+  .selected-project-card {
+    min-width: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--line, #d8e3e7);
+    border-radius: 20px;
+    background: rgba(255,255,255,.88);
+    box-shadow: 0 10px 34px rgba(32,72,105,.045);
+    transition: transform .23s ease, box-shadow .23s ease, border-color .23s ease;
+  }
+  .selected-project-card:hover {
+    transform: translateY(-4px);
+    border-color: #bfd8e0;
+    box-shadow: 0 17px 43px rgba(32,72,105,.10);
+  }
+  .selected-project-visual {
+    height: 190px;
+    display: grid;
+    place-items: center;
+    padding: 10px 20px;
+    border-bottom: 1px solid #e2edef;
+    overflow: hidden;
+  }
+  .selected-project-visual svg {
+    width: 100%;
+    height: 100%;
+    max-width: 520px;
+    display: block;
+  }
+  .visual-latent { background: linear-gradient(135deg, #eaf6f5, #eef5fc); }
+  .visual-fatigue { background: linear-gradient(135deg, #eff6fc, #f7f9fb); }
+  .visual-ppg { background: linear-gradient(135deg, #edf9f8, #f0f7fb); }
+  .visual-rehab { background: linear-gradient(135deg, #eef5fa, #f3f8f7); }
+  .diagram-label {
+    fill: #7891a2;
+    font-family: "Space Mono", monospace;
+    font-size: 9px;
+    letter-spacing: 1.2px;
+  }
+  .diagram-small {
+    fill: #48627e;
+    font-family: "Space Mono", monospace;
+    font-size: 12px;
+  }
+  .selected-project-body {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: 23px 25px 24px;
+  }
+  .selected-project-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 14px;
+    align-items: center;
+    justify-content: space-between;
+    color: #718499;
+    font-family: "Space Mono", monospace;
+    font-size: 10px;
+    letter-spacing: .015em;
+  }
+  .selected-project-status {
+    color: #238985;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+  }
+  .status-direction { color: #8a6c42; }
+  .selected-project-card h3 {
+    color: var(--ink, #102b4e);
+    font-size: clamp(20px, 2.2vw, 25px);
+    font-weight: 700;
+    letter-spacing: -.035em;
+    line-height: 1.22;
+    margin: 16px 0 12px;
+  }
+  .selected-project-card p {
+    color: var(--ink-2, #48627e);
+    font-size: 14px;
+    line-height: 1.65;
+    margin: 0 0 22px;
+  }
+  .selected-project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin-top: auto;
+  }
+  .selected-project-tags span {
+    font-size: 11px;
+    color: #527288;
+    background: #eff6f8;
+    border: 1px solid #deebef;
+    border-radius: 999px;
+    padding: 5px 10px;
+  }
+  .selected-project-link {
+    display: inline-flex;
+    align-self: flex-start;
+    align-items: center;
+    gap: 6px;
+    margin-top: 18px;
+    color: var(--blue, #1468a8);
+    font-size: 12px;
+    font-weight: 700;
+  }
+  .selected-project-link:hover { text-decoration: underline; }
+  .selected-project-link:focus-visible { outline: 2px solid var(--blue, #1468a8); outline-offset: 4px; }
+  @media (max-width: 850px) {
+    .selected-project-grid { grid-template-columns: 1fr; gap: 18px; }
+  }
+  @media (max-width: 680px) {
+    .selected-project-visual { height: 162px; padding: 7px 12px; }
+    .selected-project-body { padding: 18px 19px 21px; }
+    .selected-project-card h3 { font-size: 22px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .selected-project-card { transition: none; }
+  }
+</style>

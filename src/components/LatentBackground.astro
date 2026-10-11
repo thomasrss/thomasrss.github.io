@@ -1,0 +1,291 @@
+---
+// Full-page latent-space background: independent, slow cluster drift + local mouse interaction.
+// Place <LatentBackground /> once, directly inside <main id="top">.
+---
+
+<div class="latent-background" aria-hidden="true">
+  <canvas></canvas>
+</div>
+
+<style>
+  .latent-background {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .latent-background canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  @media (max-width: 680px) {
+    .latent-background {
+      opacity: 0.65;
+    }
+  }
+</style>
+
+<script>
+  const canvas = document.querySelector<HTMLCanvasElement>(".latent-background canvas");
+  const ctx = canvas?.getContext("2d");
+
+  if (canvas && ctx) {
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+    const clusters = [
+      { x: 0.12, y: 0.18, color: [44, 166, 164] },
+      { x: 0.85, y: 0.22, color: [45, 132, 197] },
+      { x: 0.20, y: 0.78, color: [228, 154, 58] },
+      { x: 0.86, y: 0.76, color: [44, 166, 164] },
+      { x: 0.51, y: 0.51, color: [45, 132, 197] },
+    ];
+
+    // Each cluster wanders independently between gently randomized waypoints.
+    // The positions are offsets from the original five anchor points, so the
+    // page keeps an even distribution of teal, blue and orange clusters.
+    const clusterDrift = clusters.map(() => ({
+      fromX: 0,
+      fromY: 0,
+      toX: Math.random() * 2 - 1,
+      toY: Math.random() * 2 - 1,
+      startedAt: performance.now(),
+      duration: 20000 + Math.random() * 14000, // 20–34 seconds per journey
+    }));
+
+    // Tweak these if you'd like slightly more or less movement.
+    const DRIFT_X = 0.16; // up to 16% of the viewport width
+    const DRIFT_Y = 0.15; // up to 15% of the viewport height
+
+    function getClusterCenters(time: number) {
+      const maxX = Math.min(180, width * DRIFT_X);
+      const maxY = Math.min(140, height * DRIFT_Y);
+      const padX = Math.min(85, width * 0.16);
+      const padY = Math.min(85, height * 0.16);
+
+      return clusters.map((cluster, index) => {
+        let x = cluster.x * width;
+        let y = cluster.y * height;
+
+        if (!reduceMotion.matches) {
+          const drift = clusterDrift[index];
+
+          if (time - drift.startedAt >= drift.duration) {
+            // Begin the next random journey from exactly where the last ended.
+            drift.fromX = drift.toX;
+            drift.fromY = drift.toY;
+            drift.toX = Math.random() * 2 - 1;
+            drift.toY = Math.random() * 2 - 1;
+            drift.startedAt = time;
+            drift.duration = 20000 + Math.random() * 14000;
+          }
+
+          const progress = Math.max(0, Math.min(1,
+            (time - drift.startedAt) / drift.duration
+          ));
+          // Cosine easing avoids abrupt direction changes at waypoints.
+          const smooth = (1 - Math.cos(Math.PI * progress)) / 2;
+          x += (drift.fromX + (drift.toX - drift.fromX) * smooth) * maxX;
+          y += (drift.fromY + (drift.toY - drift.fromY) * smooth) * maxY;
+        }
+
+        return {
+          x: Math.min(width - padX, Math.max(padX, x)),
+          y: Math.min(height - padY, Math.max(padY, y)),
+        };
+      });
+    }
+
+    const particles = Array.from({ length: 115 }, (_, i) => ({
+      cluster: i % clusters.length,
+      angle: Math.random() * Math.PI * 2,
+      radius: 12 + Math.sqrt(Math.random()) * 90,
+      speed: 0.25 + Math.random() * 0.55,
+      size: 1 + Math.random() * 1.3,
+      drawX: null as number | null,
+      drawY: null as number | null,
+    }));
+
+    const rgba = (color: number[], opacity: number) =>
+      `rgba(${color[0]}, ${color[1]}, ${color[2]}, ${opacity})`;
+
+    const mouse = {
+      x: 0,
+      y: 0,
+      active: false,
+      influence: 0,
+    };
+
+    // Change these three values to tune the mouse reaction.
+    const INTERACTION_RADIUS = 230;  // px around the cursor
+    const REPULSION = 78;           // maximum displacement in px
+    const EASING = 0.16;            // higher = particles react faster
+
+    let width = 1;
+    let height = 1;
+    let frameId = 0;
+    let lastFrameTime = 0;
+
+    function resize() {
+      width = Math.max(1, window.innerWidth);
+      height = Math.max(1, window.innerHeight);
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      canvas!.width = Math.round(width * dpr);
+      canvas!.height = Math.round(height * dpr);
+      ctx!.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+      // Avoid a visible jump when the browser is resized.
+      for (const particle of particles) {
+        particle.drawX = null;
+        particle.drawY = null;
+      }
+      paint(performance.now());
+    }
+
+    function paint(time: number) {
+      ctx!.clearRect(0, 0, width, height);
+
+      const t = reduceMotion.matches ? 0 : time * 0.00026;
+      const centers = getClusterCenters(time);
+      mouse.influence += ((mouse.active && !reduceMotion.matches ? 1 : 0) - mouse.influence) * 0.14;
+
+      // A soft, cursor-following glow makes the interaction noticeable
+      // even when the pointer is between the clusters.
+      if (mouse.influence > 0.005) {
+        const glow = ctx!.createRadialGradient(
+          mouse.x, mouse.y, 0,
+          mouse.x, mouse.y, 145
+        );
+        glow.addColorStop(0, `rgba(45, 132, 197, ${0.075 * mouse.influence})`);
+        glow.addColorStop(1, "rgba(45, 132, 197, 0)");
+        ctx!.fillStyle = glow;
+        ctx!.fillRect(mouse.x - 145, mouse.y - 145, 290, 290);
+      }
+
+      // The soft halos follow their independently drifting cluster centers.
+      for (const [index, cluster] of clusters.entries()) {
+        const { x, y } = centers[index];
+        const r = 150;
+        const glow = ctx!.createRadialGradient(x, y, 0, x, y, r);
+        glow.addColorStop(0, rgba(cluster.color, 0.035));
+        glow.addColorStop(1, rgba(cluster.color, 0));
+        ctx!.fillStyle = glow;
+        ctx!.fillRect(x - r, y - r, r * 2, r * 2);
+      }
+
+      const points = particles.map((particle) => {
+        const cluster = clusters[particle.cluster];
+        const center = centers[particle.cluster];
+        const angle = particle.angle + t * particle.speed;
+        const baseX = center.x + Math.cos(angle) * particle.radius;
+        const baseY = center.y + Math.sin(angle) * particle.radius * 0.72;
+
+        const dx = baseX - mouse.x;
+        const dy = baseY - mouse.y;
+        const distance = Math.max(1, Math.hypot(dx, dy));
+        const proximity = Math.max(0, 1 - distance / INTERACTION_RADIUS);
+        const push = REPULSION * proximity * proximity * mouse.influence;
+
+        const targetX = baseX + (dx / distance) * push;
+        const targetY = baseY + (dy / distance) * push;
+
+        if (particle.drawX === null || particle.drawY === null) {
+          particle.drawX = targetX;
+          particle.drawY = targetY;
+        } else {
+          // Each particle eases toward its own displaced position.
+          particle.drawX += (targetX - particle.drawX) * EASING;
+          particle.drawY += (targetY - particle.drawY) * EASING;
+        }
+
+        return {
+          x: particle.drawX!,
+          y: particle.drawY!,
+          size: particle.size,
+          color: cluster.color,
+          clusterIndex: particle.cluster,
+          proximity,
+        };
+      });
+
+      // Faint within-cluster connections.
+      for (let i = 0; i < points.length; i++) {
+        const a = points[i];
+        for (let j = i + 1; j < points.length; j++) {
+          const b = points[j];
+          if (a.clusterIndex !== b.clusterIndex) continue;
+          const distance = Math.hypot(a.x - b.x, a.y - b.y);
+          if (distance > 48) continue;
+          ctx!.strokeStyle = rgba(a.color, 0.12 * (1 - distance / 48));
+          ctx!.lineWidth = 0.75;
+          ctx!.beginPath();
+          ctx!.moveTo(a.x, a.y);
+          ctx!.lineTo(b.x, b.y);
+          ctx!.stroke();
+        }
+      }
+
+      for (const point of points) {
+        const emphasis = point.proximity * mouse.influence;
+        ctx!.fillStyle = rgba(point.color, 0.48 + emphasis * 0.32);
+        ctx!.beginPath();
+        ctx!.arc(point.x, point.y, point.size + emphasis * 0.9, 0, Math.PI * 2);
+        ctx!.fill();
+      }
+    }
+
+    function tick(time: number) {
+      if (document.hidden || reduceMotion.matches) {
+        frameId = 0;
+        return;
+      }
+      // Approximately 30 fps to keep CPU/GPU load modest.
+      if (time - lastFrameTime >= 33) {
+        paint(time);
+        lastFrameTime = time;
+      }
+      frameId = requestAnimationFrame(tick);
+    }
+
+    function stop() {
+      if (frameId) cancelAnimationFrame(frameId);
+      frameId = 0;
+    }
+
+    function refresh() {
+      stop();
+      if (reduceMotion.matches) {
+        mouse.active = false;
+        mouse.influence = 0;
+        paint(0);
+      } else if (!document.hidden) {
+        frameId = requestAnimationFrame(tick);
+      }
+    }
+
+    // Listen on WINDOW, not the canvas: the background deliberately has
+    // pointer-events:none so it cannot block links, buttons or scrolling.
+    window.addEventListener("pointermove", (event: PointerEvent) => {
+      if (reduceMotion.matches || event.pointerType === "touch") return;
+      mouse.x = event.clientX;
+      mouse.y = event.clientY;
+      mouse.active = true;
+    }, { passive: true });
+
+    window.addEventListener("pointerout", (event: PointerEvent) => {
+      if (!event.relatedTarget) mouse.active = false;
+    });
+    window.addEventListener("blur", () => { mouse.active = false; });
+    window.addEventListener("resize", resize, { passive: true });
+    document.addEventListener("visibilitychange", refresh);
+    reduceMotion.addEventListener("change", refresh);
+
+    resize();
+    refresh();
+  }
+</script>
